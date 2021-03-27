@@ -1,7 +1,21 @@
 const express = require("express");
-const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
+const { mongoUri, port } = require('./config');
+
+
 const app = express();
-const port = 5000;
+app.use(express.urlencoded({
+  extended: false
+}));
+app.use(express.json())
+console.log(mongoUri);
+mongoose
+  .connect(
+    mongoUri,
+    { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology:true}
+  )
+  .then(() => console.log("MongoDB successfully connected"))
+  .catch(err => console.log(err));
 const testRoutes = require("./routes/test-routes");
 
 app.get("/", function (req, res) {
