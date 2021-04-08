@@ -11,7 +11,7 @@ const User = require('./../models/User');
 const { secretKey } = require('./../config');
 
 router.post('/register', (req, res) => {
-    const {error, isValid} = validateRegisterInput(req.body);
+    const {errors, isValid} = validateRegisterInput(req.body);
 
     if (!isValid) {
         return res.status(400).json(errors);
@@ -77,6 +77,64 @@ router.post('/login', (req,res) => {
                 return res.status(400).json({passwordIncorrect: "Incorrect password"});
             }
         });
+    });
+});
+router.post('/login-google', (req,res) => {
+    // const {errors, isValid} = validateLoginInput(req.body);
+    // if (!isValid) {
+    //     return res.status(400).json(errors);
+    // }
+    const email = req.body.email;
+
+    User.findOne({email}).then(user => {
+        if (!user) {
+            const newUser = new User({
+                name: req.body.name,
+                avatar: req.body.avatar,
+                email: req.body.email,
+                provider: 'Google'
+            });
+            newUser.save()
+            .then(user => {
+                const payload ={
+                    id: user.id,
+                    name: user.name
+                };
+                jwt.sign(
+                    payload,
+                    secretKey,
+                    {
+                        expiresIn: 31556926
+                    },
+                    (err, token) => {
+                        res.json({
+                            success: true,
+                            token: "Bearer " + token
+                        });
+                    }
+                )
+            })
+            .catch(err => console.log(err));
+        }
+        else {
+            const payload ={
+                id: user.id,
+                name: user.name
+            };
+            jwt.sign(
+                payload,
+                secretKey,
+                {
+                    expiresIn: 31556926
+                },
+                (err, token) => {
+                    res.json({
+                        success: true,
+                        token: "Bearer " + token
+                    });
+                }
+            )
+        }
     });
 });
 
