@@ -80,12 +80,7 @@ router.post('/login', (req,res) => {
     });
 });
 router.post('/login-google', (req,res) => {
-    // const {errors, isValid} = validateLoginInput(req.body);
-    // if (!isValid) {
-    //     return res.status(400).json(errors);
-    // }
     const email = req.body.email;
-
     User.findOne({email}).then(user => {
         if (!user) {
             const newUser = new User({

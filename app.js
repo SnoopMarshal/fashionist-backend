@@ -2,14 +2,9 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { mongoUri, port } = require('./config');
 const passport = require('passport');
-const path = require('path');
 
 const app = express();
-app.set('view engine', 'ejs');
-app.set('views','views');
 
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/css', express.static(path.join(__dirname, 'node_modules/bootstrap/dist/css')))
 
 app.use(express.urlencoded({
   extended: false
@@ -24,7 +19,6 @@ mongoose
   .catch(err => console.log(err));
 
   // route files
-const testRoutes = require("./routes/test-routes");
 const users = require("./routes/users");
 const auth = require("./routes/auth");
 // Passport middleware
@@ -35,7 +29,6 @@ app.get("/", function (req, res) {
   res.send("fashionist back-end");
 });
 
-app.use(testRoutes);
 app.use('/auth', auth);
 app.use('/api/users', users);
 
