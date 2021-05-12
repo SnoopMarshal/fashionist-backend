@@ -1,0 +1,14 @@
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
+const subcategorySchema = new Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    categoryId: {
+        type: String,
+        required: true
+    }
+})
+
+module.exports = Subcategory = mongoose.model("subcategory", subcategorySchema)
