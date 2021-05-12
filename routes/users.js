@@ -8,7 +8,18 @@ const validateRegisterInput = require('./../validation/register');
 const validateLoginInput = require('./../validation/login');
 
 const User = require('./../models/User');
+const auth = require('./../middleware/auth')
 const { secretKey } = require('./../config');
+
+router.get('/', auth, async(req,res) => {
+    try {
+        const user = await User.findById(req.user.id).select('-password');
+        res.json(user);
+    } catch (error) {
+        console.log(error);
+        res.status(500).send('Server error')
+    }
+})
 
 router.post('/register', (req, res) => {
     const {errors, isValid} = validateRegisterInput(req.body);
@@ -69,7 +80,7 @@ router.post('/login', (req,res) => {
                     (err, token) => {
                         res.json({
                             success: true,
-                            token: "Bearer " + token
+                            token
                         });
                     }
                 )
@@ -125,7 +136,7 @@ router.post('/login-google', (req,res) => {
                 (err, token) => {
                     res.json({
                         success: true,
-                        token: "Bearer " + token
+                        token
                     });
                 }
             )

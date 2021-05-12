@@ -21,6 +21,7 @@ mongoose
   // route files
 const users = require("./routes/users");
 const auth = require("./routes/auth");
+const admin = require("./routes/admin")
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -31,6 +32,7 @@ app.get("/", function (req, res) {
 
 app.use('/auth', auth);
 app.use('/api/users', users);
+app.use('/api/admin', admin);
 
 app.listen(process.env.PORT || port, () => {
   console.log(`app is running on ${port}`);
