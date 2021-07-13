@@ -33,7 +33,14 @@ app.get("/", function (req, res) {
 app.use('/auth', auth);
 app.use('/api/users', users);
 app.use('/api/admin', admin);
-
+app.use((err, req, res, next) => {
+  err.status = err.status || 'error';
+  err.statusCode = err.statusCode || 500;
+  res.status(err.statusCode).json({
+    status: err.status,
+    msg: err.msg
+  })
+})
 app.listen(process.env.PORT || port, () => {
   console.log(`app is running on ${port}`);
 });
