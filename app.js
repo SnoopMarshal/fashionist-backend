@@ -34,11 +34,12 @@ app.use('/auth', auth);
 app.use('/api/users', users);
 app.use('/api/admin', admin);
 app.use((err, req, res, next) => {
+  console.log(err);
   err.status = err.status || 'error';
   err.statusCode = err.statusCode || 500;
   res.status(err.statusCode).json({
     status: err.status,
-    msg: err.msg
+    msg: err.message
   })
 })
 app.listen(process.env.PORT || port, () => {
