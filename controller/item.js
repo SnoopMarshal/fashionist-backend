@@ -1,8 +1,8 @@
 
 const Item = require('./../models/Item');
 const Category = require('./../models/Category');
+const addMultiple = require('../middleware/uploadfile');
 const SubCategory = require('./../models/Subcategory');
-
 const catchAsync = fn => {
     return (req, res, next) => {
         fn(req,res,next).catch(next)
@@ -17,13 +17,14 @@ exports.addItem = catchAsync(async (req, res, next) => {
     if (!subCategory) {
         return res.status(400).json({status: "fail",msg: "Subcategory does not exist!"})
     }
-
+    
     const newItem = new Item({
         name: req.body.name,
         categoryId: req.body.categoryId,
         subCategoryId: req.body.subCategoryId,
         price: req.body.price,
         description: req.body.description,
+        itemImages
     })
 
     await newItem.save();

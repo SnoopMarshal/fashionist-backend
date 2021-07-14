@@ -7,9 +7,7 @@ const catchAsync = fn => {
     }
 }
 exports.addSubCategory = catchAsync(async (req,res,next) => {
-    console.log(req.body);
     const subCategory = await SubCategory.findOne({name: req.body.name});
-    // console.log(subCategory._id);
     if (subCategory) {
         res.status(401).json({status: 'fail', msg: "Already exists!"});
     }

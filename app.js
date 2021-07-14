@@ -2,13 +2,27 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { mongoUri, port } = require('./config');
 const passport = require('passport');
-
+var cors = require('cors');
 const app = express();
+const corsOpts = {
+  origin: '*',
 
+  methods: [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE'
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+  ],
+};
 
 app.use(express.urlencoded({
   extended: false
 }));
+app.use(cors(corsOpts));
 app.use(express.json())
 mongoose
   .connect(
