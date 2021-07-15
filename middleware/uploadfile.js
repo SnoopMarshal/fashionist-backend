@@ -10,8 +10,6 @@ const s3 = new S3({
     signatureVersion: 'v4'
 })
 function checkFileType( file, cb ){
-    console.log(file);
-    console.table({aws_bucketName, aws_region, aws_accessKey, aws_secretKey});
     const filetypes = /jpeg|jpg|png|gif/;
     const mimetype = filetypes.test( file.mimetype );
     if( mimetype){
@@ -25,6 +23,7 @@ exports.upload = multer({
     storage: multerS3({
         s3,
         bucket: aws_bucketName,
+        acl: 'public-read',
         key: function (req, file, cb) {
             cb(null, 'images/'+Date.now().toString()+file.originalname.replace(' ','_'))
           }
