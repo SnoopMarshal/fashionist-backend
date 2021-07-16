@@ -23,6 +23,7 @@ exports.addItem = catchAsync(async (req, res, next) => {
         subCategoryId: req.body.subCategoryId,
         price: req.body.price,
         description: req.body.description,
+        thumbnail: req.files.map(img => img.key)[0],
         photos: req.files.map(img => img.key)
     })
     await newItem.save();
@@ -36,4 +37,12 @@ exports.getItem = catchAsync( async(req, res, next) => {
         return res.status(500).json({status: "fail", msg: "Item not found"})
     }
     res.status(200).json({status: "success", data: item});
+})
+
+exports.getAllItem = catchAsync( async(req, res, next) => {
+    const items = await Item.find();
+    if (!items) {
+        return res.status(500).json({status: "fail", msg: "Item not found"})
+    }
+    res.status(200).json({status: "success", data: items});
 })
