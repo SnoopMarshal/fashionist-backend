@@ -11,13 +11,12 @@ const User = require('./../models/User');
 const auth = require('./../middleware/auth')
 const { secretKey } = require('./../config');
 
-router.get('/', auth, async(req,res) => {
+router.get('/', auth, async(req,res, next) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
         res.json(user);
     } catch (error) {
-        console.log(error);
-        res.status(500).send('Server error')
+        next();
     }
 })
 

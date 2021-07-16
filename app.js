@@ -2,13 +2,27 @@ const express = require("express");
 const mongoose = require("mongoose");
 const { mongoUri, port } = require('./config');
 const passport = require('passport');
-
+var cors = require('cors');
 const app = express();
+const corsOpts = {
+  origin: '*',
 
+  methods: [
+    'GET',
+    'POST',
+    'PUT',
+    'DELETE'
+  ],
+
+  allowedHeaders: [
+    'Content-Type',
+  ],
+};
 
 app.use(express.urlencoded({
   extended: false
 }));
+app.use(cors(corsOpts));
 app.use(express.json())
 mongoose
   .connect(
@@ -21,7 +35,8 @@ mongoose
   // route files
 const users = require("./routes/users");
 const auth = require("./routes/auth");
-const admin = require("./routes/admin")
+const admin = require("./routes/admin");
+const item = require('./routes/item');
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -33,7 +48,16 @@ app.get("/", function (req, res) {
 app.use('/auth', auth);
 app.use('/api/users', users);
 app.use('/api/admin', admin);
-
+app.use('/api/item', item);
+app.use((err, req, res, next) => {
+  console.log(err);
+  err.status = err.status || 'error';
+  err.statusCode = err.statusCode || 500;
+  res.status(err.statusCode).json({
+    status: err.status,
+    msg: err.message
+  })
+})
 app.listen(process.env.PORT || port, () => {
   console.log(`app is running on ${port}`);
 });

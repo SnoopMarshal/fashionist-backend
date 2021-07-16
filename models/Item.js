@@ -21,9 +21,9 @@ const ItemScheema = mongoose.Schema({
         type: String,
         required: true
     },
-    photos: {
-        type: [String]
-    }
+    photos: [{
+        type: String
+    }]
 });
 
 const ItemModel = mongoose.model("item", ItemScheema);
