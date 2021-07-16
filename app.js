@@ -35,7 +35,8 @@ mongoose
   // route files
 const users = require("./routes/users");
 const auth = require("./routes/auth");
-const admin = require("./routes/admin")
+const admin = require("./routes/admin");
+const item = require('./routes/item');
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -47,6 +48,7 @@ app.get("/", function (req, res) {
 app.use('/auth', auth);
 app.use('/api/users', users);
 app.use('/api/admin', admin);
+app.use('/api/item', item);
 app.use((err, req, res, next) => {
   console.log(err);
   err.status = err.status || 'error';
