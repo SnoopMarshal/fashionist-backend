@@ -37,6 +37,8 @@ const users = require("./routes/users");
 const auth = require("./routes/auth");
 const admin = require("./routes/admin");
 const item = require('./routes/item');
+const category = require('./routes/category');
+const subcategory = require('./routes/subcategory');
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -49,6 +51,8 @@ app.use('/auth', auth);
 app.use('/api/users', users);
 app.use('/api/admin', admin);
 app.use('/api/item', item);
+app.use('/api/category', category);
+app.use('/api/subcategory', subcategory);
 app.use((err, req, res, next) => {
   console.log(err);
   err.status = err.status || 'error';

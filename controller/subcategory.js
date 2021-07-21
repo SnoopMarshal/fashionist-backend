@@ -19,3 +19,11 @@ exports.addSubCategory = catchAsync(async (req,res,next) => {
 
     res.status(200).json({status: 'success', msg: 'Subcategory added'})
 })
+exports.getSubcategories = async (req, res, next) => {
+    try {
+        const subcategory = await SubCategory.find()
+        res.status(200).json(subcategory);
+    } catch (error) {
+        res.status(500).json({ msg: 'Server error' });
+    }
+}

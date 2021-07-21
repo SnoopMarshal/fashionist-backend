@@ -36,7 +36,7 @@ exports.getItem = catchAsync( async(req, res, next) => {
     if (!item) {
         return res.status(500).json({status: "fail", msg: "Item not found"})
     }
-    res.status(200).json({status: "success", data: item});
+    res.status(200).json(item);
 })
 
 exports.getAllItem = catchAsync( async(req, res, next) => {
@@ -44,5 +44,5 @@ exports.getAllItem = catchAsync( async(req, res, next) => {
     if (!items) {
         return res.status(500).json({status: "fail", msg: "Item not found"})
     }
-    res.status(200).json({status: "success", data: items});
+    res.status(200).json(items);
 })
