@@ -32,11 +32,13 @@ exports.addItem = catchAsync(async (req, res, next) => {
 })
 
 exports.getItem = catchAsync( async(req, res, next) => {
-    const item = await Item.findById(req.params.id);
-    if (!item) {
-        return res.status(500).json({status: "fail", msg: "Item not found"})
-    }
-    res.status(200).json(item);
+    Item.findById(req.params.id).populate("categoryId").exec().then(item => {
+        if (!item) {
+            return res.status(500).json({status: "fail", msg: "Item not found"})
+        }
+        res.status(200).json(item);
+    })
+    // const item = await Item.findById(req.params.id)
 })
 
 exports.getAllItem = catchAsync( async(req, res, next) => {
