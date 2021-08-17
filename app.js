@@ -6,7 +6,6 @@ var cors = require('cors');
 const app = express();
 const corsOpts = {
   origin: '*',
-
   methods: [
     'GET',
     'POST',
@@ -39,6 +38,7 @@ const admin = require("./routes/admin");
 const item = require('./routes/item');
 const category = require('./routes/category');
 const subcategory = require('./routes/subcategory');
+const cart = require('./routes/cart');
 // Passport middleware
 app.use(passport.initialize());
 // Passport config
@@ -53,6 +53,7 @@ app.use('/api/admin', admin);
 app.use('/api/item', item);
 app.use('/api/category', category);
 app.use('/api/subcategory', subcategory);
+app.use('/api/cart', cart);
 app.use((err, req, res, next) => {
   console.log(err);
   err.status = err.status || 'error';

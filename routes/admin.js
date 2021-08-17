@@ -10,5 +10,4 @@ const ItemController = require("./../controller/item")
 router.post("/category", auth, CategoryController.addCategory)
 router.post("/subcategory", auth, SubCategoryController.addSubCategory)
 router.post("/item", auth, upload.upload.array("files"),  ItemController.addItem)
-
 module.exports = router;
