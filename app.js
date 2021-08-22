@@ -15,6 +15,7 @@ const corsOpts = {
 
   allowedHeaders: [
     'Content-Type',
+    'x-auth-token'
   ],
 };
 
