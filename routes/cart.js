@@ -4,5 +4,5 @@ const auth = require("./../middleware/auth");
 const CartController = require("./../controller/cart");
 
 router.post("/", auth, CartController.addToCart);
-
+router.post("/remove", auth, CartController.removeFromCart);
 module.exports = router;
